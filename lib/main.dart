@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
 
 void main() => runApp(QuizApp());
 
@@ -25,6 +26,18 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreKeeper = [];
+
+  List<Question> questionBank = [
+    Question(
+        q: 'In an instance method or a constructor, "this" is a reference to the current object?',
+        a: true),
+    Question(q: 'Garbage Collection is manual process?', a: false),
+    Question(q: 'Assignment operator is evaluated Left to Right?', a: false),
+  ];
+
+  int questionsNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +50,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'Question placeholder.',
+                questionBank[questionsNumber].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 25),
               ),
@@ -48,7 +61,21 @@ class _QuizPageState extends State<QuizPage> {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                bool correctAnswer = questionBank[questionsNumber].questionAnswer;
+                if (correctAnswer == true) {
+                  //correct
+                } else {
+                  //wrong
+                }
+                setState(
+                  () {
+                    if (questionsNumber + 1 < questionBank.length) {
+                      questionsNumber++;
+                    }
+                  },
+                );
+              },
               color: Colors.green,
               child: Text(
                 'True',
@@ -61,7 +88,23 @@ class _QuizPageState extends State<QuizPage> {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                bool correctAnswer = questionBank[questionsNumber].questionAnswer;
+
+                if (correctAnswer == false) {
+                  //correct
+                } else {
+                  //wrong
+                }
+
+                setState(
+                  () {
+                    if (questionsNumber + 1 < questionBank.length) {
+                      questionsNumber++;
+                    }
+                  },
+                );
+              },
               color: Colors.red,
               child: Text(
                 'False',
@@ -69,6 +112,9 @@ class _QuizPageState extends State<QuizPage> {
               ),
             ),
           ),
+        ),
+        Row(
+          children: scoreKeeper,
         ),
       ],
     );
